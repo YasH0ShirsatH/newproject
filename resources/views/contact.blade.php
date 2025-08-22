@@ -21,5 +21,16 @@
 @section('content')
     <h1>
         Contact page
+        
     </h1>
+    <p>
+        people :<br>
+        <ul>
+            
+                @foreach ($people as $peap )
+                   <li>{{  $peap }}</li> 
+                @endforeach
+            
+        </ul>
+    </p>
 @endsection

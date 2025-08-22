@@ -11,7 +11,7 @@
     </div>
         <div class="footer">
             @yield('footer')
-            <script>alert('hello visiter')</script>
+            <!-- <script>alert('hello visiter')</script> -->
         </div>
 </body>
 </html>

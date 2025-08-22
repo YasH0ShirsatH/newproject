@@ -22,6 +22,7 @@ class UserController extends Controller
         //
         return 'create';
     }
+    //user added function
 
     /**
      * Store a newly created resource in storage.
@@ -67,6 +68,7 @@ class UserController extends Controller
 
     public function view1($id){
         $ab = 'inplace of link ';
-        return view('/contact',['ab'=>$ab,'id'=>$id]);
+        $people = ['bababa','sdadsd','asdasddf'];
+        return view('/contact',['ab'=>$ab,'id'=>$id,'people'=>$people]);
     }
 }
