@@ -23,7 +23,7 @@ Route::get('/home/{id}/{name}', function ($id,$name) {
 Route::resource('/users',UserController::class);
 Route::get('/views/{id}',[UserController::class,'view1']);
 Route::get('/contact/{id}',function($id){
-    return view('contact',['id' => $id]);
+    return view('contact',compact('id'));
 });
 
 
