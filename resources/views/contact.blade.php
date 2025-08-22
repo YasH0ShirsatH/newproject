@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,4 +14,12 @@
         Phone : +91 - 8965325478
     </p>
 </body>
-</html>
+</html> -->
+
+@extends('layout.app')
+
+@section('content')
+    <h1>
+        Contact page
+    </h1>
+@endsection
