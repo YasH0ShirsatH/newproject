@@ -20,6 +20,7 @@ class UserController extends Controller
     public function create()
     {
         //
+        return 'create';
     }
 
     /**
@@ -36,6 +37,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        return ('show function : '. $id);
     }
 
     /**
@@ -44,6 +46,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         //
+        return 'called the edit';
     }
 
     /**
@@ -60,5 +63,10 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function view1($id){
+        $ab = 'inplace of link ';
+        return view('/contact',['ab'=>$ab,'id'=>$id]);
     }
 }

@@ -18,9 +18,13 @@ Route::get('/home/{id}/{name}', function ($id,$name) {
     return view('home',['id' => $id , 'name'=> $name]);
 });
 
-Route::get('/info/{aba}',[UserController::class,'index']);
+//Route::get('/info/{aba}',[UserController::class,'index']);
 
-
+Route::resource('/users',UserController::class);
+Route::get('/views/{id}',[UserController::class,'view1']);
+Route::get('/contact/{id}',function($id){
+    return view('contact',['id' => $id]);
+});
 
 
 
