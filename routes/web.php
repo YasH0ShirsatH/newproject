@@ -183,18 +183,29 @@ Route::get('/forcedeletes', function(){
 });
 
 
-    //Eloquent : One-To_One Relation
+//Eloquent : One-To_One Relation
 
-    Route::get('user/{id}/post',function($id){
-        $result = User::find($id)->post;
+Route::get('user/{id}/post',function($id){
+    $result = User::find($id)->post;
+     return $result;
+
+});
+    
+    //reverse
+    Route::get('post/{id}/user',function($id){
+        $result = Post::find($id)->user;
         return $result;
 
     });
 
 
+//Eloquent : One_To_Many Relation
 
+Route::get('user/{id}/posts',function($id){
+    $result = User::find($id)->posts;
+     return $result;
 
-
+});
 
 
 
