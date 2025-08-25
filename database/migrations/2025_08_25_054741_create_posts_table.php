@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
+            $table->integer('user_id')->unsigned();
+            $table->string('subject');
+            $table->string('remark');
             $table->timestamps();
         });
     }

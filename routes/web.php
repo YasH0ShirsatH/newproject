@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
 
 use Inertia\Inertia;
 
@@ -182,7 +183,13 @@ Route::get('/forcedeletes', function(){
 });
 
 
+    //Eloquent : One-To_One Relation
 
+    Route::get('user/{id}/post',function($id){
+        $result = User::find($id)->post;
+        return $result;
+
+    });
 
 
 
