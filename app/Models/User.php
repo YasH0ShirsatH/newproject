@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Post;
+use App\Models\Role;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,5 +56,10 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class,'role_user','user_id',relatedPivotKey: 'role_id')->withPivot('created_at','updated_at');
     }
 }

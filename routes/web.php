@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Country;
 
 use Inertia\Inertia;
 
@@ -27,7 +29,7 @@ Route::get('/contact/{id}',function($id){
     return view('contact',compact('id'));
 });
 
-//DATABASE SIMPLE/BASIC OPERATION
+/// DATABASE SIMPLE / BASIC OPERATION
 
 
 Route::get('/insert/{id}',function($id){
@@ -54,12 +56,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-//ELOQUENT MODEL
+//! ELOQUENT MODEL
 
 
-    //find
+    //? find
 
-Route::get('/read' ,function(){
+    Route::get('/read' ,function(){
 
     $add_data = Post::all();
     foreach($add_data as $data){
@@ -71,7 +73,7 @@ Route::get('/read' ,function(){
     }
 });
 
-Route::get('/find/{id}' ,function($id){
+    Route::get('/find/{id}' ,function($id){
 
     $data = Post::find($id);
         echo '<pre>';
@@ -81,7 +83,7 @@ Route::get('/find/{id}' ,function($id){
         echo '</pre>';
 });
 
-Route::get('/findwhere/{id}' ,function($id){
+    Route::get('/findwhere/{id}' ,function($id){
 
     $data = Post::where('id',$id)->first();
         echo '<pre>';
@@ -91,15 +93,15 @@ Route::get('/findwhere/{id}' ,function($id){
         echo '</pre>';
 });
 
-Route::get('/findmore' , function(){
+    Route::get('/findmore' , function(){
     // $find = Post::findOrFail(8);
     //goes to defalut not found page 
     $find = Post::where('id' ,'<', '7')->firstOrFail();
     return $find;
 });
 
-    //insert
-Route::get('/insertdata', function(){
+    //? insert
+    Route::get('/insertdata', function(){
         $post = new Post;
         $post->id = 4;
         $post->name = 'ganesh';
@@ -110,8 +112,8 @@ Route::get('/insertdata', function(){
     });
 
 
-    //update
-Route::get('/updatedata/{id}', function($id){
+    //? update
+    Route::get('/updatedata/{id}', function($id){
         $post = Post::find($id);
         $post->name = 'ganesh2';
         $post->email = 'ganesh2@gmaail.com';
@@ -124,14 +126,14 @@ Route::get('/updatedata/{id}', function($id){
             Post::where('id',$id)->update(['name'=>'vigyan',  'email'=>'vigyan@gmail.com']);
         });
 
-// create data
+    //? create data
 
-Route::get('/createdata', function(){
+    Route::get('/createdata', function(){
         $post = Post::create(['name'=>'asdasd','email'=>'asd@gmail.com']);
         
     });
 
-//delete data
+    //?delete data
 
     //method 1
     Route::get('/deletedata/{id}', function($id){
@@ -145,7 +147,7 @@ Route::get('/createdata', function(){
             
         });
 
-//TRASHING
+///TRASHING
 
 Route::get('/softdeletes/{id}', function($id){
     Post::find($id)->delete();
@@ -161,19 +163,19 @@ Route::get('/retsoftdeletes', function(){
     }
 });
 
-    //restore the trashed
-Route::get('/restoredeletes', function(){
+    //?restore the trashed
+    Route::get('/restoredeletes', function(){
     //$post = Post::onlyTrashed()->restore();
 
     //or
 
     $post = Post::where('id',1)->restore();
     return $post;
-});
+    });
 
-    //force delete .completely delete it without option to restore
+    //?force delete .completely delete it without option to restore
 
-Route::get('/forcedeletes', function(){
+    Route::get('/forcedeletes', function(){
     //$post = Post::onlyTrashed()->restore();
 
     //or
@@ -183,7 +185,7 @@ Route::get('/forcedeletes', function(){
 });
 
 
-//Eloquent : One-To_One Relation
+/// Eloquent : One-To_One Relation
 
 Route::get('user/{id}/post',function($id){
     $result = User::find($id)->post;
@@ -199,12 +201,52 @@ Route::get('user/{id}/post',function($id){
     });
 
 
-//Eloquent : One_To_Many Relation
+/// Eloquent : One_To_Many Relation
 
 Route::get('user/{id}/posts',function($id){
     $result = User::find($id)->posts;
-     return $result;
+     return $result;//todo asdasd
 
+});
+
+/// Eloquent : Many_To_Many Relation
+
+Route::get('user/{id}/roles',function($id){
+    $result = User::find($id)->roles()->orderBy('id','desc')->get();
+    // return $result;
+     foreach($result as $res){
+        echo $res->id.' ';
+        echo $res->name;
+
+     }
+
+});
+    //? reverse
+    Route::get('roles/{id}/user',function($id){
+        $result = Role::find($id)->users()->orderBy('id','desc')->get();
+        // return $result;
+        foreach($result as $res){
+            echo $res->id.' ';
+            echo $res->name;
+
+        }
+
+    });
+    //? Accessing intermideiate table/pivit in this case its role_user
+
+Route::get('user/pivot',function(){
+    $user = User::find(1);
+    foreach($user->roles as $role){
+        return $role->pivot;
+    }
+});
+
+
+/// Eloquent MANY-THROUGH relation
+
+Route::get('/user/country',function(){
+    $country = Country::find(1);
+    return $country->posts;
 });
 
 
