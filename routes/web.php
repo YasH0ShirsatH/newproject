@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 use Inertia\Inertia;
 
@@ -27,7 +28,26 @@ Route::get('/contact/{id}',function($id){
 });
 
 
+Route::get('/insert/{id}',function($id){
+    DB::insert('insert into example(id, is_admin) values(?, ?)' ,[$id,1]);
+});
 
+Route::get('/read',function(){
+    $res = DB::select('SELECT * FROM example WHERE id = ?' ,[3]);
+    foreach( $res as  $a ){
+        return $a->created_at;
+    }
+});
+
+Route::get('/update',function(){
+    $res = DB::update('UPDATE example set is_admin = 10 WHERE id = ?' , [3]);
+    return $res;
+});
+
+Route::get('/delete/{id}',function($id){
+    $res = DB::update('DELETE FROM example WHERE id = ?' , [$id]); 
+    return $res;
+});
 
 
 
