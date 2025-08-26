@@ -62,4 +62,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class,'role_user','user_id',relatedPivotKey: 'role_id')->withPivot('created_at','updated_at');
     }
+    public function photos(){
+        //! Use imageable_id and imageable_type as there are default used or just name it in function whichever func u named like ->
+        return $this->morphMany(Photo::class,'image','image_type', 'image_id');
+    }
 }

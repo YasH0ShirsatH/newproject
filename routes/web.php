@@ -7,6 +7,9 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Country;
+use App\Models\Photo;
+use App\Models\Video;
+use App\Models\Tag;
 
 use Inertia\Inertia;
 
@@ -85,12 +88,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/findwhere/{id}' ,function($id){
 
-    $data = Post::where('id',$id)->first();
+    $data = Post::where('subject',$id)->get();
+        foreach ($data as $post) {
         echo '<pre>';
-        echo $data->id.' ';
-        echo $data->name.' ';
-        echo $data->email.' ';
+        echo $post->id . ' ';
+        echo $post->subject . ' ';
+        echo $post->remark . ' ';
         echo '</pre>';
+    }
 });
 
     Route::get('/findmore' , function(){
@@ -250,9 +255,45 @@ Route::get('/user/country',function(){
 });
 
 
+/// Polymorphic relation
 
+Route::get('/polymorphic/user/{id}',function($id){
 
+    $user = User::find($id);
+    return $user->photos;
+    // foreach($user->photos as $photo){
+    //     return  $photo;
+    // }
+});
+Route::get('/polymorphic/post/{id}',function($id){
 
+    $user = Post::find($id);
+    return $user->photos;
+    // foreach($user->photos as $photo){
+    //     return  $photo;
+    // }
+});
+    /// Inverse Polymorphic relations 
+    Route::get('/poly/{id}/user', function($id){
+        $photo = Photo::findOrFail($id);
+        return $photo->imageable;
+
+    });
+
+/// Polymorphic Many-To-Many
+
+Route::get('post/tag/{id}',function($id){
+    $post = Post::find($id);
+    return $post->tags;
+});
+Route::get('video/tag/{id}',function($id){
+    $video = Video::find($id);
+    return $video->videos;
+});
+Route::get('tag/{id}',function($id){
+    $tag = Tag::find($id);
+    return $tag->videos;
+});
 
 
 
